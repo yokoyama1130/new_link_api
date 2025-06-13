@@ -23,6 +23,7 @@
 
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
 /*
  * This file is loaded in the context of the `Application` class.
@@ -93,4 +94,10 @@ return function (RouteBuilder $routes): void {
      * });
      * ```
      */
+
+    // config/routes.php の最後の方に追加
+    Router::prefix('api', function ($routes) {
+        $routes->setExtensions(['json']);
+        $routes->fallbacks(DashedRoute::class);
+    });
 };
