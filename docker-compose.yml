@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8765:8765"
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - db
+    command: >
+      bash -c "
+        composer update &&
+        bin/cake server -H 0.0.0.0 -p 8765
+      "
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cakephp
+      MYSQL_USER: cakeuser
+      MYSQL_PASSWORD: cakepass
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
