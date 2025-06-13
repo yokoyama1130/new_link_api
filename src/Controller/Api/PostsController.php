@@ -27,4 +27,18 @@ class PostsController extends AppController
             '_serialize' => ['posts'],
         ]);
     }
+
+    public function add()
+    {
+        $this->request->allowMethod(['post']); // POSTのみ許可
+
+        $data = $this->request->getData();
+
+        $this->set([
+            'message' => '投稿を受け取りました！',
+            'received' => $data,
+            '_serialize' => ['message', 'received']
+        ]);
+    }
+
 }
